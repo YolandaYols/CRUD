@@ -47,15 +47,16 @@ async function cargarDatosEmpleadoEditar(idEmpleado) {
       `acciones/detallesEmpleado.php?id=${idEmpleado}`
     );
     if (response.status === 200) {
-      const { id, nombre, edad, cedula, sexo, telefono, cargo, avatar } =
+      const { id, nombre, edad, cedula, sexo, telefono, cargo, salario } =
         response.data;
 
-      console.log(id, nombre, edad, cedula, sexo, telefono, cargo, avatar);
+      console.log(id, nombre, edad, cedula, sexo, telefono, cargo, salario);
       document.querySelector("#idempleado").value = id;
       document.querySelector("#nombre").value = nombre;
       document.querySelector("#edad").value = edad;
       document.querySelector("#cedula").value = cedula;
       document.querySelector("#telefono").value = telefono;
+      document.querySelector("#salario").value = salario;
 
       // Seleccionar el sexo correspondiente
       seleccionarSexo(sexo);
@@ -63,13 +64,13 @@ async function cargarDatosEmpleadoEditar(idEmpleado) {
       // Obtener el elemento <select> de cargo
       seleccionarCargo(cargo);
 
-      document.querySelector("#avatar").value = avatar;
+      /* document.querySelector("#avatar").value = avatar;
       let elementAvatar = document.querySelector("#avatar");
       if (avatar) {
         elementAvatar.src = `acciones/fotos_empleados/${avatar}`;
       } else {
         elementAvatar.src = "assets/imgs/sin-foto.jpg";
-      }
+      } */
     } else {
       console.log("Error al cargar el empleado a editar");
     }

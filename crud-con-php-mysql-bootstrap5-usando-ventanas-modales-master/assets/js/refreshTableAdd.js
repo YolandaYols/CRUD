@@ -9,31 +9,16 @@ window.insertEmpleadoTable = async function () {
       let tr = document.createElement("tr");
       tr.id = `empleado_${infoEmpleado.id}`;
       tr.innerHTML = `
-        <th class="dt-type-numeric sorting_1" scope="row">${
-          infoEmpleado.id
-        }</th>
+        <th class="dt-type-numeric sorting_1" scope="row">${infoEmpleado.id}</th>
         <td>${infoEmpleado.nombre}</td>
         <td>${infoEmpleado.edad}</td>
         <td>${infoEmpleado.cedula}</td>
         <td>${infoEmpleado.cargo}</td>
         <td>${infoEmpleado.salario}</td>
         <td>
-          <img class="rounded-circle" src="acciones/fotos_empleados/${
-            infoEmpleado.avatar || "sin-foto.jpg"
-          }" alt="${infoEmpleado.nombre}" width="50" height="50">
-        </td>
-        <td>
-          <a title="Ver detalles del empleado" href="#" onclick="verDetallesEmpleado(${
-            infoEmpleado.id
-          })" class="btn btn-success"><i class="bi bi-binoculars"></i></a>
-          <a title="Editar datos del empleado" href="#" onclick="editarEmpleado(${
-            infoEmpleado.id
-          })" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-          <a title="Eliminar datos del empleado" href="#" onclick="eliminarEmpleado(${
-            infoEmpleado.id
-          }, '${
-        infoEmpleado.avatar || ""
-      }')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+          <a title="Ver detalles del empleado" href="#" onclick="verDetallesEmpleado(${infoEmpleado.id})" class="btn btn-success"><i class="bi bi-binoculars"></i></a>
+          <a title="Editar datos del empleado" href="#" onclick="editarEmpleado(${infoEmpleado.id})" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+          <a title="Eliminar datos del empleado" href="#" onclick="eliminarEmpleado(${infoEmpleado.id}
         </td>
       `;
 

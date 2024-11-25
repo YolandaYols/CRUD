@@ -49,9 +49,6 @@ async function eliminarEmpleado(idEmpleado, avatarEmpleado) {
     document
       .getElementById("confirmDeleteBtn")
       .setAttribute("data-id", idEmpleado);
-    document
-      .getElementById("confirmDeleteBtn")
-      .setAttribute("data-avatar", avatarEmpleado);
 
     // Agregar un event listener al botón "Eliminar empleado"
     document

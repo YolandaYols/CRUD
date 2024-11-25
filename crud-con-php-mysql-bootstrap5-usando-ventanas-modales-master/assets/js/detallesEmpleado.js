@@ -50,15 +50,8 @@ async function cargarDetalleEmpleado(idEmpleado) {
     );
     if (response.status === 200) {
       console.log(response.data);
-      const { nombre, edad, cedula, sexo, telefono, cargo, avatar } =
+      const { nombre, edad, cedula, sexo, telefono, cargo, salario } =
         response.data;
-      const avatarURL = avatar ? `acciones/fotos_empleados/${avatar}` : null;
-      const avatarExistente = avatarURL
-        ? await verificarExistenciaImagen(avatarURL)
-        : false;
-      const avatarHTML = avatarExistente
-        ? `<img src="${avatarURL}" alt="Avatar" style="width: 100px; height: 100px; display:block;">`
-        : "No disponible";
 
       // Limpiar el contenido existente de la lista ul
 
@@ -85,10 +78,10 @@ async function cargarDetalleEmpleado(idEmpleado) {
         <li class="list-group-item"><b>Cargo:</b> 
           ${cargo ? cargo : "No disponible"}
         </li>
-         <li class="list-group-item"><b>Cédula:</b> 
+         <li class="list-group-item"><b>Salario:</b> 
           ${salario ? salario : "No disponible"}
           </li>
-         <li class="list-group-item"><b>Avatar:</b> ${avatarHTML}</li>
+
       `;
     } else {
       alert(`Error al cargar los detalles del empleado con ID ${idEmpleado}`);
@@ -96,16 +89,5 @@ async function cargarDetalleEmpleado(idEmpleado) {
   } catch (error) {
     console.error(error);
     alert("Hubo un problema al cargar los detalles del empleado");
-  }
-}
-
-// Función para verificar la existencia de una imagen
-async function verificarExistenciaImagen(url) {
-  try {
-    const response = await fetch(url, { method: "HEAD" });
-    return response.ok;
-  } catch (error) {
-    console.error("Error al verificar la existencia de la imagen:", error);
-    return false;
   }
 }

@@ -46,12 +46,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Teléfono</label>
-                            <input type="number" name="telefono" id="telefono" class="form-control" required />
+                            <label class="form-label">Telefono</label>
+                            <input type="text" name="telefono" id="telefono" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Salario</label>
-                            <input type="number" name="Salario" id="salario" class="form-control" required />
+                            <input type="text" name="salario" id="salario" class="form-control" />
                         </div>
 
                         <div class="mb-3">
@@ -75,18 +75,6 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="mb-3 mt-4">
-                            <label class="form-label">Foto actual del empleado </label>
-                            <br>
-                            <img src"" id="avatar" style="display: block;" class="rounded-circle float-start" alt="Foto del empleado" width="80">
-                        </div>
-                        <br> <br>
-
-                        <div class="mb-3 mt-4">
-                            <label class="form-label">Cambiar Foto del empleado</label>
-                            <input class="form-control form-control-sm" type="file" name="avatar" accept="image/png, image/jpeg" />
-                        </div>
-
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn_add" onclick="actualizarEmpleado(event)">
                                 Actualizar datos del empleado
