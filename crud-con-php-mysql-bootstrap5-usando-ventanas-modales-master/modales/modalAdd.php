@@ -69,11 +69,6 @@
                             </select>
                         </div>
 
-                        <div class="mb-3 mt-4">
-                            <label class="form-label">Cambiar Foto del empleado</label>
-                            <input class="form-control form-control-sm" type="file" name="avatar" accept="image/png, image/jpeg" />
-                        </div>
-
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn_add" onclick="registrarEmpleado(event)">
                                 Registrar nuevo empleado

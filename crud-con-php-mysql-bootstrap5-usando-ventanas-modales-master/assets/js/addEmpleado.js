@@ -4,7 +4,7 @@
 async function modalRegistrarEmpleado() {
   try {
     // Ocultar la modal si está abierta
-    const existingModal = document.getElementById("detalleEmpleadoModal");
+    const existingModal = document.getElementById("agregarEmpleadoModal");
     if (existingModal) {
       const modal = bootstrap.Modal.getInstance(existingModal);
       if (modal) {
@@ -19,7 +19,6 @@ async function modalRegistrarEmpleado() {
       throw new Error("Error al cargar la modal");
     }
 
-    // response.text() es un método en programación que se utiliza para obtener el contenido de texto de una respuesta HTTP
     const data = await response.text();
 
     // Crear un elemento div para almacenar el contenido de la modal
@@ -50,26 +49,35 @@ async function registrarEmpleado(event) {
     // Crear un objeto FormData para enviar los datos del formulario
     const formData = new FormData(formulario);
 
+    // Mostrar una notificación mientras se procesa el registro
+    toastr.options = window.toastrOptions;
+    toastr.info("Registrando el nuevo empleado...");
+
     // Enviar los datos del formulario al backend usando Axios
     const response = await axios.post("acciones/acciones.php", formData);
 
     // Verificar la respuesta del backend
     if (response.status === 200) {
-      // Llamar a la función insertEmpleadoTable para insertar el nuevo registro en la tabla
-      window.insertEmpleadoTable();
+      console.log("Empleado registrado correctamente");
+
+      // Llamar a la función para actualizar la tabla de empleados (si existe)
+      if (typeof window.insertEmpleadoTable === "function") {
+        window.insertEmpleadoTable();
+      }
 
       setTimeout(() => {
-        $("#agregarEmpleadoModal").css("opacity", "");
+        // Cerrar la modal
         $("#agregarEmpleadoModal").modal("hide");
 
-        //Llamar a la función para mostrar un mensaje de éxito
-        toastr.options = window.toastrOptions;
-        toastr.success("¡El empleado se actualizo correctamente!.");
+        // Llamar a la función para mostrar un mensaje de éxito
+        toastr.success("¡El empleado se registró correctamente!");
       }, 600);
     } else {
       console.error("Error al registrar el empleado");
+      toastr.error("Hubo un problema al registrar el empleado.");
     }
   } catch (error) {
     console.error("Error al enviar el formulario", error);
+    toastr.error("Hubo un problema al enviar los datos.");
   }
 }

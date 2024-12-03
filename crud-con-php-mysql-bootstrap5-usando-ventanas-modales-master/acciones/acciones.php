@@ -5,51 +5,58 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 */
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../config/config.php");
     $tbl_empleados = "tbl_empleados";
 
+    // Sanitizar entradas
+    $nombre = mysqli_real_escape_string($conexion, trim($_POST['nombre']));
+    $edad = mysqli_real_escape_string($conexion, trim($_POST['edad']));
+    $cedula = mysqli_real_escape_string($conexion, trim($_POST['cedula']));
+    $sexo = mysqli_real_escape_string($conexion, trim($_POST['sexo']));
+    $telefono = mysqli_real_escape_string($conexion, trim($_POST['telefono']));
+    $cargo = mysqli_real_escape_string($conexion, trim($_POST['cargo']));
+    $salario = mysqli_real_escape_string($conexion, trim($_POST['salario']));
 
-    $nombre = trim($_POST['nombre']);
-    $edad = trim($_POST['edad']);
-    $cedula = trim($_POST['cedula']);
-    $sexo = trim($_POST['sexo']);
-    $telefono = trim($_POST['telefono']);
-    $cargo = trim($_POST['cargo']);
-    $salario=trim($_POST['salario']);
-
-
-    if (isset($_FILES['archivo'])) { // Cambia 'avatar' por 'archivo' si se usa un nuevo nombre para el archivo subido
+    if (isset($_FILES['archivo'])) {
         $archivoTemporal = $_FILES['archivo']['tmp_name'];
         $nombreArchivo = $_FILES['archivo']['name'];
-    
         $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION));
-    
-        // Generar un nombre único y seguro para el archivo
+
+        // Verificar tipo de archivo
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array($extension, $allowedExtensions)) {
+            echo json_encode(['error' => 'Archivo no permitido. Solo se permiten imágenes.']);
+            exit;
+        }
+
         $nombreArchivo = substr(md5(uniqid(rand())), 0, 10) . "." . $extension;
         $rutaDestino = $dirLocal . '/' . $nombreArchivo;
-    
-        // Mover el archivo a la ubicación deseada
+
         if (move_uploaded_file($archivoTemporal, $rutaDestino)) {
-    
-            // Eliminar 'avatar' de la consulta SQL
             $sql = "INSERT INTO $tbl_empleados (nombre, edad, cedula, sexo, telefono, cargo, salario) 
-            VALUES ('$nombre', '$edad', '$cedula', '$sexo', '$telefono', '$cargo','$salario')";
-    
+                    VALUES ('$nombre', '$edad', '$cedula', '$sexo', '$telefono', '$cargo', '$salario')";
+
             if ($conexion->query($sql) === TRUE) {
-                header("location:../");
+                echo json_encode(['status' => 'success', 'message' => 'Empleado agregado correctamente.']);
             } else {
-                echo "Error al crear el registro: " . $conexion->error;
+                echo json_encode(['error' => 'Error al crear el registro: ' . $conexion->error]);
             }
         } else {
-            echo json_encode(array('error' => 'Error al mover el archivo'));
+            echo json_encode(['error' => 'Error al mover el archivo']);
         }
     } else {
-        echo json_encode(array('error' => 'No se ha enviado ningún archivo o ha ocurrido un error al cargar el archivo'));
+        $sql = "INSERT INTO $tbl_empleados (nombre, edad, cedula, sexo, telefono, cargo, salario) 
+                VALUES ('$nombre', '$edad', '$cedula', '$sexo', '$telefono', '$cargo', '$salario')";
+
+        if ($conexion->query($sql) === TRUE) {
+            echo json_encode(['status' => 'success', 'message' => 'Empleado agregado correctamente.']);
+        } else {
+            echo json_encode(['error' => 'Error al crear el registro: ' . $conexion->error]);
+        }
     }
-    
 }
+
 /**
  * Función para obtener todos los empleados 
  */
