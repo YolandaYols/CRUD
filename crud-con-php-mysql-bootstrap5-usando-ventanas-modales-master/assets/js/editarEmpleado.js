@@ -127,6 +127,7 @@ async function actualizarEmpleado(event) {
       if (window.toastrOptions) {
         toastr.options = window.toastrOptions;
         toastr.success("¡El empleado se actualizo correctamente!.");
+      // Para recargar la pagina 
         setTimeout(() => {
           location.reload();
         }, 1750); // Recarga después de 1.7 segundos
